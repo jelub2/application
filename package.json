@@ -8,8 +8,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "application"
+    "url": "https://github.com/jelub2/application.git"
   },
   "author": "J Lubberts",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.5",
+    "mongoose": "^5.9.5"
+  }
 }
