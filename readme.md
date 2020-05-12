@@ -1,12 +1,28 @@
 # application
 
-This application is meant for cyclist to check whether they should go out for a ride or stay in. Based on weather procastinations on and locally collected data from sensor like temperature and humidity sensors.
+This application is meant for cyclists to check whether they should go out for a ride or stay in. Based on weather procastinations on and locally collected data from sensor like temperature and humidity sensors.
 
-# Use of code
-NodeJS to set up a webserver
+# Packages
+## Arduino
++ ESP8266WiFi
++ WebSocketClient
++ dht11
 
-Arduino code to collect and share data
+## NodeJS
++ body-body
++ dotenv
++ ejs
++ express
++ openweather-apis
++ ws
 
-Weather API to get the procrastination of the location.
+# Code
+## NodeJS to set up a webserver  
 
-Phone arduino app to share gps data.
+## server side  
+
+## Client side code  
+
+## NodeMCU Arduino code to collect and share temperature data  
+
+## Connection to Weather API to get the procrastination of the location.  

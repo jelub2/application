@@ -1,0 +1,56 @@
+*{
+  font-family: sans-serif;
+  margin:0;
+  padding: 0;
+  margin-bottom: 16px;
+}
+
+h1{
+  font-size: 3em;
+  color:#ffae00;
+  text-shadow: 2px 1px #74b1c5;
+}
+
+.header{
+  background: lightgrey;
+  padding: 16px;
+  margin: 0;
+  margin-bottom: 16px;
+}
+
+button{
+  background-color: red;
+  padding: 8px;
+  border-radius: 5px;
+  color: white;
+  font-size: 24px;
+  box-shadow: 2px 2px 6px 1px darkgrey;
+  border: none;
+  margin: 16px;
+  cursor: pointer;
+}
+
+button:hover{
+  background-color: #d40000;
+}
+
+button:active{
+  background-color: transparent;
+}
+
+p span{
+  text-decoration: underline;
+  color: red;
+}
+
+table{
+  min-width: 50%;
+}
+
+th, td{
+  text-align: center;
+}
+
+th{
+  width: 33%;
+}
