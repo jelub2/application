@@ -19,7 +19,7 @@ This application is meant for cyclists to check whether they should go out for a
 # Code
 ## NodeJS to set up a webserver  
 
-### server side  
+### Server side  
 
 ### Client side code  
 
