@@ -15,33 +15,40 @@
 <h2>Should I go out for a ride?</h2>
 <p>For prototype purposes only. The location is by default set to <span>Amsterdam</span>.
 When the system has acces to a GPS sensor it could use the coordinates tracked by this sensor.</p>
-<button type="button" name="button"> Ask for values </button>
 </section>
-<h2>Values</h2>
 
+<section class="values">
+  <div class="value">
+    <p>Temperature:</p>
+    <p id="temperature" >
+      -
+    </p>
+  </div>
+  <div class="value">
+    <p>Humidity:</p>
+    <p id="hummidity" >
+      -
+    </p>
+  </div>
+<div class="value">
+  <p>Temperature API</p>
+  <p id="temperatureAPI" >
+    -
+  </p>
+</div>
+<div class="value">
+  <p>Humidity API:</p>
+  <p id="rain" >
+    -
+  </p>
+</div>
+</section>
 
-<table>
-  <tr>
-    <th>Temperature</th>
-    <th>Rain</th>
-    <th>Advice</th>
-  </tr>
-  <tr>
-    <td>Green</td>
-    <td>Green</td>
-    <td>Green</td>
-  </tr>
-</table>
+<button id="btnStart">Start</button>
 
-<input style="width: 800px;height: 200px" type="text" placeholder="enter text here to send to server" id="eingabe" onkeypress="myFunction(event)"/>
-
-<button onclick="clearlog()">Clear Logs</button>
-
-<div style="overflow:scroll; width: 800px; height: 550px; border: solid; border-radius: 9px" id="display">
+<div id="Content">
 
 </div>
-
-
 <script type="text/javascript" src="js/js.js"></script>
 </body>
 </html>
