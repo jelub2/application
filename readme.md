@@ -58,24 +58,111 @@ The front-end javascript code can be found here.
 
 ## NodeMCU Arduino code
 
-### to collect and share temperature data  
+### Collect and share temperature data  
 
-The built up the arduino code the HelloServer example is used as a basis to start with. The DHT11 package is added to collect temperature and humidity data. To handle requests from the node a capacitive touch sensor is added to the network. This way it's also possible to receive feedback from the system without using a screen, but just by using the button.
+The built up the arduino code the HelloServer example is used as a basis to start with. The DHT11 package is added to collect temperature and humidity data. To handle requests from the node a capacitive touch sensor is added to the network. This way it's also possible to receive feedback from the system without using a screen, but only by using the button.
 
-The front-end javascript code can be found here.
+### Step 1
 
-## Connection to WeatherAPI
+First we have to include the used packages.
 
-### get the weather procrastination of the location.  
+```
+#include <ESP8266WiFi.h>
+#include <WiFiClient.h>
+#include <ESP8266WebServer.h>
+#include <ESP8266mDNS.h>
+#include <dht11.h>
+
+```
+
+### Step 2
+
+Then we define some variables. Make sure to change the SSID and the Password to the network you would like to use.
+
+```
+dht11 DHT11;
+
+#define ctsPin 5 // Pin for capactitive touch sensor
+#define dht11Pin 4 // Pin for DHT-sensor
+
+#ifndef STASSID
+#define STASSID "***"
+#define STAPSK  "***"
+#endif
+
+const char* ssid = STASSID;
+const char* password = STAPSK;
+
+ESP8266WebServer server(80);
+
+const int led = 2;
+int chk;
+int temperature;
+String temp;
+String myString = String(led);
+```
+
+### Step 3
+
+Next we write down some function to handle requests. For example a request to the root:
+
+```
+/*users at root*/
+void handleRoot() {
+  digitalWrite(led, 1);
+  server.send(200, "text/plain", "hello from esp8266!");
+  digitalWrite(2, HIGH);
+}
+```
+
+### Step 4
+
+The setup function is already filled in when using the HelloServer example. When needed see the full code below this [link](www.github.com).
+
+To use the touch sensor and the built-in led the next code is added to the setup function:
+
+```
+pinMode(2, OUTPUT);     // Initialize the LED_BUILTIN pin as an output
+pinMode(ctsPin, INPUT); // Initialize dht sensors
+```
+
+Next the response to the server is changed to. This application works with JSON data. The server.send is changed to:
+
+```
+server.send(200, "application/json", "{\"values\": {\"temp\":" + temp + "}}");
+```
+
+In the code above there is the temp value. This integer is declared in the top section of the code. In the loop function we are going to read the sensorvalues and put them in the temp integer by using the next code:
+
+```
+void loop(void) {
+
+  chk = DHT11.read(dht11Pin);
+  temperature = DHT11.temperature;
+  temp = String(temperature);   
+  Serial.println(temperature);
+  server.handleClient();
+  MDNS.update();
+
+  delay(2000);
+}
+```
+
+To see the full code click on this [link](www.github.com)
+
+## Connect to OpenWeatherAPI
+
+### Get the weather procrastination  
 
 The WeatherAPI is used to collect data from an external resource. With the documentation of the API it's very easy to connect this API to your product.
 
-To connect the API and retreive data the code below has been used.
+To connect the API and retreive data the code below is used.
 
 The api_key is for security reasons placed in the dot env file.
 
+### Step 1
 First we have to install and require the package.  
-Install in your terminal the following text:
+Install > type in your terminal the following text:
 ```javascript
 npm install --save openweather-apis
 ```
@@ -84,6 +171,8 @@ require:
 ```javascript
 const weather    = require('openweather-apis')
 ```  
+
+### Step 2
 Second the values are set to the preferences we use for the application.
 
 ```javascript
@@ -93,6 +182,7 @@ weather.setUnits('metric');
 weather.setAPPID(api_key);  
 ```  
 
+### Step 3
 Then we use the values from above to do a request to the API
 
 ```javascript
