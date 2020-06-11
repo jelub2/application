@@ -10,7 +10,7 @@ With this information the user can decide to go out for a spin or to stay in wai
 
 # Schematic of the network
 
-![schematic of the network]("https://github.com/jelub2/application/blob/version-AJAX/docs_assets/Tekengebied%201.png?raw=true")
+![schematic of the network]("https://raw.githubusercontent.com/jelub2/application/version-AJAX/docs_assets/Tekengebied%201.png")
 
 # Packages used
 ## Arduino
