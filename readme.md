@@ -10,8 +10,6 @@ With this information the user can decide to go out for a spin or to stay in wai
 
 # Schematic of the network
 
-![schematic]("https://raw.githubusercontent.com/jelub2/application/version-AJAX/docs_assets/Tekengebied%201.png")
-
 <img src="https://raw.githubusercontent.com/jelub2/application/version-AJAX/docs_assets/Tekengebied%201.png"
      alt="Schematic" />
 
@@ -64,8 +62,49 @@ The front-end javascript code can be found here.
 
 The built up the arduino code the HelloServer example is used as a basis to start with. The DHT11 package is added to collect temperature and humidity data. To handle requests from the node a capacitive touch sensor is added to the network. This way it's also possible to receive feedback from the system without using a screen, but just by using the button.
 
+The front-end javascript code can be found here.
+
 ## Connection to WeatherAPI
 
 ### get the weather procrastination of the location.  
 
 The WeatherAPI is used to collect data from an external resource. With the documentation of the API it's very easy to connect this API to your product.
+
+To connect the API and retreive data the code below has been used.
+
+The api_key is for security reasons placed in the dot env file.
+
+First we have to install and require the package.  
+Install in your terminal the following text:
+```javascript
+npm install --save openweather-apis
+```
+
+require:
+```javascript
+const weather    = require('openweather-apis')
+```  
+Second the values are set to the preferences we use for the application.
+
+```javascript
+weather.setLang('en');
+weather.setCoordinate(52.37, 4.89);
+weather.setUnits('metric');
+weather.setAPPID(api_key);  
+```  
+
+Then we use the values from above to do a request to the API
+
+```javascript
+weather.getAllWeather((err, JSONObj) => {
+  tempApi     = JSONObj.main.temp;
+  humidityApi = JSONObj.main.humidity;
+  values.push(tempApi)
+  values.push(humidityApi)
+  console.log(tempApi + humidityApi)
+})
+```
+
+The values are pushed to array. In this array the values of the API and the values of the sensor are placed.
+
+The Weather API docs can be found [here](https://openweathermap.org/current)
