@@ -12,7 +12,7 @@ button.addEventListener("click", function(){
       var values = http.responseText
        console.log(valueObject)
        document.getElementById('temperature').innerHTML = valueObject[2].temp
-       document.getElementById('hummidity').innerHTML = valueObject[2].temp
+       document.getElementById('hummidity').innerHTML = valueObject[2].humi
        document.getElementById('temperatureAPI').innerHTML = valueObject[0]
        document.getElementById('rain').innerHTML = valueObject[1]
     }

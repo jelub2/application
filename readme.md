@@ -28,6 +28,7 @@ With this information the user can decide to go out for a spin or to stay in wai
 + express
 + openweather-apis
 + mongoose
++ request
 
 ## Front-end
 + Vanilla javascript
@@ -43,18 +44,60 @@ To handle request from the browsers client side a NodeJS webserver is set up. If
 
 ## Client side
 
+In the description of the weather API down below you can read how the information is retrieved from the weather API.
+
+In the code below a request is made by using the request npm-package. When a post request from the browser is made to the server. The server makes a Get request to the NodeMCU. The NodeMCU is connected to the wi-fi and accessible by its own IP-adress.
+
+
 ### Front-end
 
 To check whether it's a good plan to go out for a ride the front-end side makes a XMLHttpRequest to the back-end server. In this case a NodeJS server.
 
 #### How it works
-When the button with Id btnStart is clicked the function that makes a request to the back-end is fired.
+When the button with Id 'btnStart' is clicked the function that makes a request to the back-end is fired.
 The response of the object is parsed to a JSON structure and saved in the valueObject variable.
 Then the HTML is changed to the received values by using innerHTML.
 
 Based on the received numbers the front-end side gives feedback whether to go out or not.
 
-The front-end javascript code can be found here.
+First we have to get access to the button on the front-end. With getElementById a addEventListener can be made to check if the user has clicked the button.
+
+
+```javascript
+const button = document.getElementById('btnStart')
+var res
+```
+
+When the button is clicked the addEventListener is triggered. Then a new XMLHttpRequest is made.
+Now the system knows it has to make a POST request to the server to retrieve information.
+
+When the request is done the function in the handelRequestStateChange is fired. First it checks the statuscode is allright and the readyState is 4, which means the request has been completed.
+
+Then the information is placed in the values variable. A JSON object is used to easy access the information. With innerHTML the HTML is changed to the received values.
+
+```javascript
+button.addEventListener("click", function(){
+  var http = new XMLHttpRequest()
+
+  http.open('POST', '/')
+  http.onreadystatechange = handleRequestStateChange;
+  http.send()
+
+  var handleRequestStateChange = function(){
+    if(http.readyState == 4 && http.status == 200){
+      var valueObject = JSON.parse(http.responseText)
+      var values = http.responseText
+       console.log(valueObject)
+       document.getElementById('temperature').innerHTML = valueObject[2].temp
+       document.getElementById('hummidity').innerHTML = valueObject[2].temp
+       document.getElementById('temperatureAPI').innerHTML = valueObject[0]
+       document.getElementById('rain').innerHTML = valueObject[1]
+    }
+  }
+})
+```
+
+See full code [here](www.github.com)
 
 ## NodeMCU Arduino code
 
@@ -126,13 +169,17 @@ pinMode(2, OUTPUT);     // Initialize the LED_BUILTIN pin as an output
 pinMode(ctsPin, INPUT); // Initialize dht sensors
 ```
 
+### Step 5
+
 Next the response to the server is changed to. This application works with JSON data. The server.send is changed to:
 
 ```
 server.send(200, "application/json", "{\"values\": {\"temp\":" + temp + "}}");
 ```
 
-In the code above there is the temp value. This integer is declared in the top section of the code. In the loop function we are going to read the sensorvalues and put them in the temp integer by using the next code:
+### Step 6
+
+In the code above there is the temp value. This integer is declared in the top section of the code. In the loop function we are going to read the sensor values and put them in the temp integer by using the next code:
 
 ```
 void loop(void) {
@@ -197,4 +244,4 @@ weather.getAllWeather((err, JSONObj) => {
 
 The values are pushed to array. In this array the values of the API and the values of the sensor are placed.
 
-The Weather API docs can be found [here](https://openweathermap.org/current)
+The Weather API documentation can be found [here](https://openweathermap.org/current)

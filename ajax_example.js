@@ -63,58 +63,62 @@ app.post('/', function(req, res){
     humidityApi = JSONObj.main.humidity;
     values.push(tempApi)
     values.push(humidityApi)
-    console.log(tempApi + humidityApi)
   })
 
   //request with npm request package
-  request('http://192.168.2.24/temp', { json: true }, (err, res, body) => {
+  request('http://192.168.2.24', { json: true }, (err, res, body) => { // request data from ESP8266 module
     if (err) {
     return console.log(err)
     }
     let valueObj = body.values
     values.push(valueObj)
-    sendVal(valueObj)
+    sendVal()
   })
 
-function sendVal(value){
-  console.log(values)
-    console.log("send")
-    res.send(values)
+function sendVal(){
+  console.log("send values to Front-end")
+  res.send(values)
+  saveData()
   }
-})
 
 // Save request to MongoDB database
 function saveData(){
-  var collectionSchema = new mongoose.Schema({
-    date: {
-      type: Date,
-      default: Date.now
-    },
-  	City: {
-      type: String
-    },
-    TemperatureClient: {
-      type: Number
-    },
-    TemperatureAPI: {
-      type: Number
-    },
-    RainAPI: {
-      type: Number
+    var Collection = mongoose.model('Collection', collectionSchema)
+
+    var collectionOne = new Collection({
+      City: "Amsterdam",
+      TemperatureClient: values[2].temp,
+      RainClient: values[2].humi,
+      TemperatureAPI:values[0],
+      RainAPI: values[1]}
+    )
+
+     collectionOne.save()
     }
-  })
+})
 
-  var Collection = mongoose.model('Collection', collectionSchema)
-
-  var collectionOne = new Collection({
-    City: "Amsterdam",
-    TemperatureClient: 15,
-    TemperatureAPI: 15,
-    RainAPI: 0.5})
-
-   collectionOne.save()
+//Mongoose Schema for mongoDB
+var collectionSchema = new mongoose.Schema({
+  date: {
+    type: Date,
+    default: Date.now
+  },
+  City: {
+    type: String
+  },
+  TemperatureClient: {
+    type: Number
+  },
+  RainClient: {
+    type: Number
+  },
+  TemperatureAPI: {
+    type: Number
+  },
+  RainAPI: {
+    type: Number
   }
+})
 
-  saveData()
 
-server.listen(3002, '192.168.2.25');
+server.listen(3002, '192.168.2.44');
