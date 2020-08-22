@@ -5,10 +5,62 @@
   margin-bottom: 16px;
 }
 
+body{
+  background:;
+  margin: 32px 0;
+   max-width: 600px;
+  width: 90%;
+  margin: auto;
+}
+
 h1{
   font-size: 3em;
   color:#ffae00;
   text-shadow: 2px 1px #74b1c5;
+}
+
+
+.values{
+  background:#717171;
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  grid-template-rows: (2, 50%);
+}
+
+.value{
+  position: relative;
+  height: 5em;
+  margin: 2px;
+  padding: 4px;
+}
+
+.value p:first-child{
+  font-weight: 800;
+}
+
+.value:nth-of-type(1){
+  background: #e4e4e4;
+  grid-row: 1/2;
+  grid-column: 1/2;
+
+}
+
+.value:nth-of-type(2){
+  background: #e4e4e4;
+    grid-row: 1/2;
+    grid-column: 2/3;
+}
+
+.value:nth-of-type(3){
+  background: #e4e4e4;
+      grid-row: 2/3;
+    grid-column: 1/2;
+}
+
+.value:nth-of-type(4){
+  background: #e4e4e4;;
+   grid-row: 2/3;
+  grid-column: 2/3;
 }
 
 .header{
@@ -21,12 +73,12 @@ h1{
 button{
   background-color: red;
   padding: 8px;
+  width: 200px;
   border-radius: 5px;
   color: white;
   font-size: 24px;
   box-shadow: 2px 2px 6px 1px darkgrey;
   border: none;
-  margin: 16px;
   cursor: pointer;
 }
 
@@ -41,16 +93,4 @@ button:active{
 p span{
   text-decoration: underline;
   color: red;
-}
-
-table{
-  min-width: 50%;
-}
-
-th, td{
-  text-align: center;
-}
-
-th{
-  width: 33%;
 }
